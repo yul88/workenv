@@ -1,0 +1,22 @@
+### ~/.ssh/config example
+Host ansible neo4j 172.31.* 192.168.0.*
+    ProxyCommand ssh -q -W %h:%p jumpbox1.your.domain
+    IdentityFile ~/.ssh/keypair_1.pem
+Host jumpbox1.your.domain *.cn-northwest-1.compute.amazonaws.com.cn
+    IdentityFile ~/.ssh/keypair_1.pem
+Host jumpbox2.your.domain *.cn-north-1.compute.amazonaws.com.cn
+    IdentityFile ~/.ssh/keypair_2.pem
+Host *.your.domain
+    ControlMaster auto
+    ControlPath /tmp/%r@%h:%p
+    ControlPersist 30m
+    ServerAliveInterval 180
+Host emr
+    User hadoop
+Host github.com
+    User yourname
+    IdentityFile ~/.ssh/yourname_github
+Host *
+    User centos
+    Compression yes
+    ForwardAgent no
