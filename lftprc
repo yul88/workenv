@@ -1,0 +1,7 @@
+set cmd:default-protocol sftp
+set cmd:long-running 60
+set cmd:ls-default "-lF"
+set cmd:parallel 1
+set cmd:queue-parallel 1
+set cmd:remote-completion yes
+set color:use-color auto

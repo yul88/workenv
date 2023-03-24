@@ -1,0 +1,20 @@
+#set atblanks
+set autoindent
+#set constantshow
+#set cutfromcursor
+set historylog
+#set locking
+set morespace
+set multibuffer
+set nohelp
+set nonewlines
+#set positionlog
+set smarthome
+#set softwrap
+set speller "/usr/local/bin/aspell -x -c"
+set suspend
+set tabstospaces
+set tempfile
+#set trimblanks
+
+#include "/usr/local/share/nano/*"
