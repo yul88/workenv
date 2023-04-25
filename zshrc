@@ -23,11 +23,10 @@ CASE_SENSITIVE="true"
 # Case-sensitive completion must be off. _ and - will be interchangeable.
 # HYPHEN_INSENSITIVE="true"
 
-# Uncomment the following line to disable bi-weekly auto-update checks.
-# DISABLE_AUTO_UPDATE="true"
-
-# Uncomment the following line to automatically update without prompting.
-# DISABLE_UPDATE_PROMPT="true"
+# Uncomment one of the following lines to change the auto-update behavior
+# zstyle ':omz:update' mode disabled  # disable automatic updates
+# zstyle ':omz:update' mode auto      # update automatically without asking
+# zstyle ':omz:update' mode reminder  # just remind me to update when it's time
 
 # Uncomment the following line to change how often to auto-update (in days).
 # export UPDATE_ZSH_DAYS=13
@@ -45,6 +44,9 @@ CASE_SENSITIVE="true"
 # ENABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
+# You can also set it to another string to have that shown instead of the default red dots.
+# e.g. COMPLETION_WAITING_DOTS="%F{yellow}waiting...%f"
+# Caution: this setting can cause issues with multiline prompts in zsh < 5.7.1 (see #5765)
 # COMPLETION_WAITING_DOTS="true"
 
 # Uncomment the following line if you want to disable marking untracked files
@@ -64,12 +66,12 @@ CASE_SENSITIVE="true"
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
 # Which plugins would you like to load?
-# Standard plugins can be found in ~/.oh-my-zsh/plugins/*
-# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
+# Standard plugins can be found in $ZSH/plugins/
+# Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-#plugins=(aws colored-man-pages common-aliases fabric git-prompt virtualenv z)
-plugins=(aws colored-man-pages common-aliases fabric z)
+#plugins=(git)
+plugins=(colored-man-pages common-aliases fabric git kubectl virtualenv z)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -78,15 +80,21 @@ source $ZSH/oh-my-zsh.sh
 export PATH="/usr/local/opt/python/bin:/usr/local/opt/python/libexec/bin:/usr/local/opt/ruby/bin:/usr/local/opt/go/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:."
 export MANPATH="/usr/local/man:$MANPATH"
 
+
 # You may need to manually set your language environment
 export LANG=en_US.UTF-8
 export LC_CTYPE=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
-export EDITOR='vim'
+# if [[ -n $SSH_CONNECTION ]]; then
+#   export EDITOR='vim'
+# else
+   export EDITOR='mvim'
+# fi
 
 # Compilation flags
-export ARCHFLAGS="-arch x86_64"
+# export ARCHFLAGS="-arch x86_64"
+export ARCHFLAGS="-arch arm64"
 
 # hh
 export HISTFILE=~/.zsh_history
@@ -103,9 +111,6 @@ export TZ="Asia/Shanghai"
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-alias cp='cp -i'
-alias mv='mv -i'
-alias rm='rm -i'
 alias vcat='pygmentize -g'
 alias sshp='ssh $(sed -e "s/[:, ].*$//" -e "s/^\[//" -e "s/\]$//" ~/.ssh/known_hosts | sort -u | percol)'
 
