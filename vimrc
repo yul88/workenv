@@ -30,32 +30,46 @@ Plug 'vim-ruby/vim-ruby'
 
 call plug#end()
 
-syntax on
 filetype plugin indent on
+syntax on
 
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 
 " The following are commented out as they cause vim to behave a lot
 " differently from regular Vi. They are highly recommended though.
-set showcmd             " Show (partial) command in status line.
-set showmatch           " Show matching brackets.
-set ignorecase          " Do case insensitive matching
-set smartcase           " Do smart case matching
-set incsearch           " Incremental search
-set autowrite           " Automatically save before commands like :next and :make
-set hidden              " Hide buffers when they are abandoned
+se sc             " Show (partial) command in status line.
+se sm           " Show matching brackets.
+se ic          " Do case insensitive matching
+se sc           " Do smart case matching
+se is           " Incremental search
+se aw           " Automatically save before commands like :next and :make
+se hid              " Hide buffers when they are abandoned
 set mouse=a             " Enable mouse usage (all modes)
 
 "se t_8f=u;%lu;%lum
 "se t_8b=u;%lu;%lum
-se termguicolors
+se tgc
 se bg=dark
 colo solarized
 
+set title
+
+se ar
+se cf
+se cpt-=i
+"se cuc
+se cul
 se et
+se fdm=syntax
 se hls
+se lbr
+se lz
+se ru
 se sw=4
+se sr
 se ts=4
+se vb
+se wmnu
 
 let mapleader="\<SPACE>"
 nnoremap <Leader>fs :w<CR>
