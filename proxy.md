@@ -1,4 +1,5 @@
 * tinyproxy
+```conf
 User tinyproxy
 Group tinyproxy
 Port 8080
@@ -14,8 +15,10 @@ ViaProxyName "tinyproxy"
 Filter "/etc/tinyproxy/filter"
 ConnectPort 443
 ConnectPort 563
+```
 
 * /etc/privoxy/config
+```conf
 user-manual /usr/share/doc/privoxy/user-manual
 confdir /etc/privoxy
 logdir /var/log/privoxy
@@ -42,9 +45,10 @@ keep-alive-timeout 300
 tolerate-pipelining 1
 socket-timeout 300
 receive-buffer-size 32768
+```
 
-* /etc/privoxy-blocklist.conf[https://github.com/Andrwe/privoxy-blocklist]
-
+* [/etc/privoxy-blocklist.conf](https://github.com/Andrwe/privoxy-blocklist)
+```conf
 URLS=("https://easylist-downloads.adblockplus.org/easyprivacy+easylist.txt" "https://easylist-downloads. adblockplus.org/easylistchina.txt")
 INIT_CONF="/etc/conf.d/privoxy"
 PRIVOXY_USER="privoxy"
@@ -53,8 +57,10 @@ PRIVOXY_CONF="/etc/privoxy/config"
 TMPNAME="$(basename "$(readlink -f "${0}")")"
 TMPDIR="/tmp/${TMPNAME}"
 DBG=0
+```
 
 * vim for privoxy-blocklist
+```
 :%s#^-#*-#
 :%s#\[/&:?=_\]#/#g
 :%s#^\.\.\*#*#
@@ -70,4 +76,5 @@ DBG=0
 
 :%s#^/#*/#
 :%s#^:#*:#
+```
 
