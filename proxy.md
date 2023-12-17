@@ -49,7 +49,7 @@ receive-buffer-size 32768
 
 * [/etc/privoxy-blocklist.conf](https://github.com/Andrwe/privoxy-blocklist)
 ```conf
-URLS=("https://easylist-downloads.adblockplus.org/easyprivacy+easylist.txt" "https://easylist-downloads. adblockplus.org/easylistchina.txt")
+URLS=("https://easylist-downloads.adblockplus.org/easyprivacy+easylist.txt" "https://easylist-downloads.adblockplus.org/easylistchina.txt")
 INIT_CONF="/etc/conf.d/privoxy"
 PRIVOXY_USER="privoxy"
 PRIVOXY_GROUP="root"
