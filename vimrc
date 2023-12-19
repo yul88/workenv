@@ -48,7 +48,7 @@ set mouse=a             " Enable mouse usage (all modes)
 
 "se t_8f=u;%lu;%lum
 "se t_8b=u;%lu;%lum
-se tgc
+"se tgc
 se bg=dark
 colo solarized
 
