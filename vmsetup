@@ -1,0 +1,136 @@
+
+# bashrc
+alias cp='cp -i'
+alias mv='mv -i'
+alias rm='rm -i'
+alias vi='vim'
+
+
+# crontab
+5 19 * * 6 /usr/sbin/shutdown -r +2
+5 20 * * * /usr/bin/apt update -y && /usr/bin/apt upgrade -y
+
+
+apt update -y && apt upgrade -y
+apt install iptables-persistent -y
+apt install net-tools -y
+apt install atop -y
+apt install fail2ban -y
+apt install sysstat -y
+apt install tuned tuned-utils tuned-utils-systemtap -y
+
+systemctl enable atop
+systemctl start atop
+systemctl enable fail2ban.service
+systemctl start fail2ban.service
+
+
+# disable ipv6
+# /etc/sysctl.conf and sysctl -p
+net.ipv6.conf.all.disable_ipv6=1
+net.ipv6.conf.default.disable_ipv6=1
+net.ipv6.conf.lo.disable_ipv6=1
+
+
+# /etc/fail2ban/jail.conf
+banaction = iptables-multiport[blocktype=DROP]
+banaction_allports = iptables-allports[blocktype=DROP]
+ignoreip = 127.0.0.1/8 <CIDR>
+bantime  = 13h
+findtime  = 1h
+
+
+# rules.v4
+*filter
+# Allow all outgoing, but drop incoming and forwarding packets by default
+:INPUT DROP [0:0]
+:FORWARD DROP [0:0]
+:OUTPUT ACCEPT [0:0]
+
+# Drop invalid packets
+-A INPUT -m conntrack --ctstate INVALID -j DROP
+
+# Boilerplate acceptance policy
+-A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+-A INPUT -m conntrack --ctstate NEW -i lo -j ACCEPT
+
+# Acceptable internal traffic
+-A INPUT -m conntrack --ctstate NEW -s 10.0.0.0/8 -j ACCEPT
+-A INPUT -m conntrack --ctstate NEW -s 172.16.0.0/12 -j ACCEPT
+-A INPUT -m conntrack --ctstate NEW -s 192.168.0.0/16 -j ACCEPT
+-A INPUT -m conntrack --ctstate NEW -s 169.254.0.0/16 -j ACCEPT
+
+# Acceptable traffic from office
+-A INPUT -m conntrack --ctstate NEW -s x.x.x.x/x -j ACCEPT -m comment --comment "office"
+
+# Pass specific traffic
+-A INPUT -xxx -m recent --set --name KNOCK --rsource -j DROP
+-A INPUT -p tcp --syn -m conntrack --ctstate NEW -m multiport --dports 22,80,443,8080 -m recent --update --name KNOCK --rsource --seconds 3600 -j ACCEPT
+-A INPUT -p icmp --icmp-type echo-request -m limit --limit 1/sec --limit-burst 2 -j ACCEPT
+
+# Reject anything that's fallen through to this point
+-A INPUT -j DROP
+
+# Commit the changes
+COMMIT
+
+*raw
+:PREROUTING ACCEPT [0:0]
+:OUTPUT ACCEPT [0:0]
+COMMIT
+
+*nat
+:PREROUTING ACCEPT [0:0]
+:INPUT ACCEPT [0:0]
+:OUTPUT ACCEPT [0:0]
+:POSTROUTING ACCEPT [0:0]
+COMMIT
+
+*security
+:INPUT ACCEPT [0:0]
+:FORWARD ACCEPT [0:0]
+:OUTPUT ACCEPT [0:0]
+COMMIT
+
+*mangle
+:PREROUTING ACCEPT [0:0]
+:INPUT ACCEPT [0:0]
+:FORWARD ACCEPT [0:0]
+:OUTPUT ACCEPT [0:0]
+:POSTROUTING ACCEPT [0:0]
+COMMIT
+
+
+# rules.v6
+*filter
+:INPUT DROP [0:0]
+:FORWARD DROP [0:0]
+:OUTPUT DROP [0:0]
+COMMIT
+
+*raw
+:PREROUTING DROP [0:0]
+:OUTPUT DROP [0:0]
+COMMIT
+
+*nat
+:PREROUTING DROP [0:0]
+:INPUT DROP [0:0]
+:OUTPUT DROP [0:0]
+:POSTROUTING DROP [0:0]
+COMMIT
+
+*security
+:INPUT DROP [0:0]
+:FORWARD DROP [0:0]
+:OUTPUT DROP [0:0]
+COMMIT
+
+*mangle
+:PREROUTING DROP [0:0]
+:INPUT DROP [0:0]
+:FORWARD DROP [0:0]
+:OUTPUT DROP [0:0]
+:POSTROUTING DROP [0:0]
+COMMIT
+
